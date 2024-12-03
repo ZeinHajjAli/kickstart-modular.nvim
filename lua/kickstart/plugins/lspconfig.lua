@@ -29,12 +29,16 @@ return {
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
       {
+        'SmiteshP/nvim-navic',
+        opts = require('custom.configs.navic').opts,
+      },
+      {
         'SmiteshP/nvim-navbuddy',
         dependencies = {
           'SmiteshP/nvim-navic',
           'MunifTanjim/nui.nvim',
         },
-        opts = { lsp = { auto_attach = true } },
+        opts = require('custom.configs.navbuddy').opts,
       },
     },
     config = function()

@@ -67,4 +67,6 @@ vim.opt.scrolloff = 10
 
 vim.opt.wrap = false
 
+vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+
 -- vim: ts=2 sts=2 sw=2 et
