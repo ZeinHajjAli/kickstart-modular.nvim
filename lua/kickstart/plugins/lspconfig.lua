@@ -28,6 +28,14 @@ return {
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
+      {
+        'SmiteshP/nvim-navbuddy',
+        dependencies = {
+          'SmiteshP/nvim-navic',
+          'MunifTanjim/nui.nvim',
+        },
+        opts = { lsp = { auto_attach = true } },
+      },
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -275,6 +283,12 @@ return {
           end,
         },
       }
+
+      local navbuddy = require 'nvim-navbuddy'
+      navbuddy.setup()
+      vim.keymap.set('n', '<leader>n', function()
+        navbuddy.open()
+      end, { desc = 'Open Navbuddy' })
     end,
   },
 }
