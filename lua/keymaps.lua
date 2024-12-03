@@ -45,10 +45,10 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<C-j>', '<cmd> TmuxNavigateDown<CR>', { desc 
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-k>', '<cmd> TmuxNavigateUp<CR>', { desc = 'Window Up' })
 
 -- netrw commands
-vim.keymap.set('n', '<leader>pp', ':Explore<CR>', { desc = 'Open NetRW Explorer Window' })
-vim.keymap.set('n', '<leader>pv', ':30Vexplore<CR>', { desc = 'Open NetRW Explorer Window (Vertical Split)' })
-vim.keymap.set('n', '<leader>ph', ':30Hexplore<CR>', { desc = 'Open NetRW Explorer Window (Horizontal Split)' })
-vim.keymap.set('n', '<leader>pd', ':30Lexplore<CR>', { desc = 'Open NetRW Explorer Drawer' })
+-- vim.keymap.set('n', '<leader>pp', ':Explore<CR>', { desc = 'Open NetRW Explorer Window' })
+-- vim.keymap.set('n', '<leader>pv', ':30Vexplore<CR>', { desc = 'Open NetRW Explorer Window (Vertical Split)' })
+-- vim.keymap.set('n', '<leader>ph', ':30Hexplore<CR>', { desc = 'Open NetRW Explorer Window (Horizontal Split)' })
+-- vim.keymap.set('n', '<leader>pd', ':30Lexplore<CR>', { desc = 'Open NetRW Explorer Drawer' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
