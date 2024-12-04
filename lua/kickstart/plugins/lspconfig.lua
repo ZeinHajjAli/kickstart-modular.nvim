@@ -164,6 +164,16 @@ return {
           if client and client.name == 'ruff' then
             client.server_capabilities.hoverProvider = false
           end
+
+          -- Add organizeImports keybinding if using ts_ls
+          if client and client.name == 'ts_ls' then
+            map('<leader>oi', function()
+              vim.lsp.buf.execute_command {
+                command = '_typescript.organizeImports',
+                arguments = { vim.api.nvim_buf_get_name(0) },
+              }
+            end, '[O]rganize [I]mports')
+          end
         end,
       })
 
