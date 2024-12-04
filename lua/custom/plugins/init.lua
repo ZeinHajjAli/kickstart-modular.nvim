@@ -38,10 +38,7 @@ return {
     -- lazy = false,
     branch = 'regexp', -- This is the regexp branch, use this for the new version
     config = function()
-      local opts = require 'custom.configs.venv-selector'
-      require('venv-selector').setup {
-        changed_venv_hooks = { opts.ruff_hook },
-      }
+      require 'custom.configs.venv-selector'
     end,
 
     keys = { { 'vs', '<cmd>VenvSelect<cr>' } },
@@ -51,7 +48,7 @@ return {
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require('custom.configs.harpoon').setup()
+      require 'custom.configs.harpoon'
     end,
   },
   {
@@ -70,12 +67,17 @@ return {
     end,
   },
   {
-    {
-      'stevearc/oil.nvim',
-      dependencies = { 'nvim-tree/nvim-web-devicons' },
-      config = function()
-        require('custom.configs.oil').setup()
-      end,
-    },
+    'stevearc/oil.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require 'custom.configs.oil'
+    end,
+  },
+  {
+    'numToStr/Comment.nvim',
+    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
+    config = function()
+      require 'custom.configs.comment'
+    end,
   },
 }

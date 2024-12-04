@@ -209,7 +209,19 @@ return {
         ruff = {},
         tailwindcss = {},
         html = {},
-        cssls = {},
+        cssls = {
+          settings = {
+            css = { validate = true, lint = {
+              unknownAtRules = 'ignore',
+            } },
+            scss = { validate = true, lint = {
+              unknownAtRules = 'ignore',
+            } },
+            less = { validate = true, lint = {
+              unknownAtRules = 'ignore',
+            } },
+          },
+        },
         -- clangd = {},
         -- gopls = {},
         -- rust_analyzer = {},
