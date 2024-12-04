@@ -69,4 +69,9 @@ vim.opt.wrap = false
 
 vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
+-- Enable folding using treesitter expression
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 99
+
 -- vim: ts=2 sts=2 sw=2 et

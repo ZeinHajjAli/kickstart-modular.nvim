@@ -80,4 +80,34 @@ return {
       require 'custom.configs.comment'
     end,
   },
+  {
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    opts = {
+      bigfile = { enabled = true },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      statuscolumn = { enabled = true, folds = { open = true } },
+      -- words = { enabled = true },
+      scratch = { enabled = true },
+      dashboard = { enabled = true },
+    },
+    keys = {
+      {
+        '<leader>.',
+        function()
+          Snacks.scratch()
+        end,
+        desc = 'Toggle Scratch Buffer',
+      },
+      {
+        '<leader>S',
+        function()
+          Snacks.scratch.select()
+        end,
+        desc = 'Select Scratch Buffer',
+      },
+    },
+  },
 }
