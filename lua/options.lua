@@ -23,6 +23,20 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
+vim.g.clipboard = vim.env.SSH_TTY
+    and {
+      name = 'OSC 52',
+      copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+        ['*'] = require('vim.ui.clipboard.osc52').copy '*',
+      },
+      paste = {
+        ['+'] = require('vim.ui.clipboard.osc52').paste '+',
+        ['*'] = require('vim.ui.clipboard.osc52').paste '*',
+      },
+    }
+  or false
+
 -- Enable break indent
 vim.opt.breakindent = true
 
