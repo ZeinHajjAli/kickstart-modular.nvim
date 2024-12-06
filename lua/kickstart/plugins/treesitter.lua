@@ -29,6 +29,10 @@ return {
         'bibtex',
         'latex',
         'toml',
+        'dockerfile',
+        'bash',
+        'gitcommit',
+        'gitignore',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,

@@ -60,6 +60,12 @@ map({ 'n', 'i', 'v' }, '<C-k>', '<cmd> TmuxNavigateUp<CR>', { desc = 'Window Up'
 -- map('n', '<leader>ph', ':30Hexplore<CR>', { desc = 'Open NetRW Explorer Window (Horizontal Split)' })
 -- map('n', '<leader>pd', ':30Lexplore<CR>', { desc = 'Open NetRW Explorer Drawer' })
 
+-- Split sizing commands
+map('n', '<M-,>', '<C-W>5<')
+map('n', '<M-.>', '<C-W>5>')
+map('n', '<M-j>', '<C-W>+')
+map('n', '<M-k>', '<C-W>-')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
