@@ -122,4 +122,7 @@ return {
       hide_target_hack = false,
     },
   },
+  {
+    'stevearc/dressing.nvim',
+  },
 }
