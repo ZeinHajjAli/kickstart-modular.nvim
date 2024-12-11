@@ -29,6 +29,16 @@ return {
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+
+      -- For sorting by [F]recency
+      {
+        'prochri/telescope-all-recent.nvim',
+        dependencies = {
+          'nvim-telescope/telescope.nvim',
+          'kkharji/sqlite.lua',
+          'stevearc/dressing.nvim',
+        },
+      },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that

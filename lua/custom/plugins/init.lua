@@ -92,6 +92,10 @@ return {
       -- words = { enabled = true },
       scratch = { enabled = true },
       dashboard = { enabled = true },
+      indent = { enabled = true, scope = { animate = { enabled = false } } },
+      input = { enabled = true },
+      zen = { enabled = true },
+      -- dim = { enabled = true },
     },
     keys = {
       {
@@ -107,6 +111,13 @@ return {
           Snacks.scratch.select()
         end,
         desc = 'Select Scratch Buffer',
+      },
+      {
+        '<leader>zm',
+        function()
+          Snacks.zen()
+        end,
+        desc = 'Toggle [Z]en [M]ode',
       },
     },
   },
@@ -124,5 +135,10 @@ return {
   },
   {
     'stevearc/dressing.nvim',
+    opts = {
+      input = {
+        enabled = false,
+      },
+    },
   },
 }
