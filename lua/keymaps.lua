@@ -11,8 +11,8 @@ end
 map('n', ';', ':')
 
 -- A quick 'jk', or 'kj' in insert mode goes to normal mode
-map('i', 'jk', '<Esc>')
-map('i', 'kj', '<Esc>')
+-- map('i', 'jk', '<Esc>')
+-- map('i', 'kj', '<Esc>')
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
