@@ -13,7 +13,21 @@ return {
       vim.cmd.colorscheme 'catppuccin'
 
       -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
+      -- vim.cmd.hi 'Comment gui=none'
+    end,
+    config = function()
+      require('catppuccin').setup {
+        integrations = {
+          harpoon = true,
+          navic = { enabled = true, custom_bg = 'lualine' },
+          snacks = true,
+          which_key = true,
+          blink_cmp = true,
+        },
+        custom_highlights = {
+          CursorLineNr = { fg = require('catppuccin.palettes').get_palette('mocha').rosewater, bold = true },
+        },
+      }
     end,
   },
 }

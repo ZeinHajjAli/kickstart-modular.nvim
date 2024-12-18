@@ -1,0 +1,26 @@
+return {
+  'saghen/blink.cmp',
+  lazy = false,
+  dependencies = 'rafamadriz/friendly-snippets',
+
+  version = 'v0.*',
+
+  opts = {
+    keymap = { preset = 'enter', ['<Tab>'] = { 'select_next', 'fallback' }, ['<S-Tab>'] = { 'select_prev', 'fallback' } },
+
+    completion = { list = { selection = 'auto_insert' } },
+
+    appearance = {
+      nerd_font_variant = 'mono',
+    },
+
+    sources = {
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
+    },
+
+    signature = { enabled = true },
+  },
+  -- allows extending the providers array elsewhere in your config
+  -- without having to redefine it
+  -- opts_extend = { 'sources.default' },
+}
