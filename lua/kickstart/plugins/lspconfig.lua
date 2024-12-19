@@ -268,8 +268,6 @@ return {
         },
         eslint = {},
         astro = {},
-        --
-
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -284,6 +282,9 @@ return {
             },
           },
         },
+        dockerls = {},
+        docker_compose_language_service = {},
+        bashls = {},
       }
 
       -- Ensure the servers and tools above are installed
