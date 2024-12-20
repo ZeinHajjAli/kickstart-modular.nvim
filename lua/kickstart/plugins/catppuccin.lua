@@ -17,6 +17,7 @@ return {
     end,
     config = function()
       require('catppuccin').setup {
+        transparent_background = true,
         integrations = {
           harpoon = true,
           navic = { enabled = true, custom_bg = 'lualine' },
