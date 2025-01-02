@@ -285,6 +285,7 @@ return {
         dockerls = {},
         docker_compose_language_service = {},
         bashls = {},
+        zls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -315,6 +316,16 @@ return {
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
+        },
+      }
+
+      require('lspconfig').sourcekit.setup {
+        capabilities = {
+          workspace = {
+            didChangeWatchedFiles = {
+              dynamicRegistration = true,
+            },
+          },
         },
       }
 

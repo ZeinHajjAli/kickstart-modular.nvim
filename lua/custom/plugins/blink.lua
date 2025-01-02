@@ -8,7 +8,18 @@ return {
   opts = {
     keymap = { preset = 'enter', ['<Tab>'] = { 'select_next', 'fallback' }, ['<S-Tab>'] = { 'select_prev', 'fallback' } },
 
-    completion = { list = { selection = 'auto_insert' } },
+    completion = {
+      list = { selection = 'auto_insert' },
+      documentation = { auto_show = true },
+      menu = {
+        draw = {
+          columns = {
+            { 'label', 'label_description', gap = 1 },
+            { 'kind_icon', 'kind', gap = 1 },
+          },
+        },
+      },
+    },
 
     appearance = {
       nerd_font_variant = 'mono',

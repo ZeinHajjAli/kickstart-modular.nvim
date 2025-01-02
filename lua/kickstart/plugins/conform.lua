@@ -31,6 +31,13 @@ return {
           lsp_format = lsp_format_opt,
         }
       end,
+
+      log_level = vim.log.levels.DEBUG,
+
+      formatters = {
+        swift_format = { command = 'swift', args = { 'format', '$FILENAME', '--in-place' } },
+      },
+
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettierd' },
@@ -40,6 +47,9 @@ return {
         ss = { 'prettierd' },
         html = { 'prettierd' },
         c = { 'clang-format' },
+        zig = { 'zigfmt' },
+        zir = { 'zigfmt' },
+        swift = { 'swift_format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
