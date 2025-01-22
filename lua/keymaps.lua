@@ -61,10 +61,19 @@ map({ 'n', 'i', 'v' }, '<C-k>', '<cmd> TmuxNavigateUp<CR>', { desc = 'Window Up'
 -- map('n', '<leader>pd', ':30Lexplore<CR>', { desc = 'Open NetRW Explorer Drawer' })
 
 -- Split sizing commands
-map('n', '<M-,>', '<C-W>5<')
-map('n', '<M-.>', '<C-W>5>')
-map('n', '<M-j>', '<C-W>+')
-map('n', '<M-k>', '<C-W>-')
+-- map('n', '<M-,>', '<C-W>5<')
+-- map('n', '<M-.>', '<C-W>5>')
+-- map('n', '<M-j>', '<C-W>+')
+-- map('n', '<M-k>', '<C-W>-')
+
+-- Temporary comment commands
+map('n', 'gct', function()
+  vim.cmd 'normal! yy'
+  require('Comment.api').toggle.linewise.current()
+  vim.cmd 'normal! p'
+end, { noremap = true, silent = true })
+
+-- map('v', 'gct', ':y<CR>gvgcp')
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
