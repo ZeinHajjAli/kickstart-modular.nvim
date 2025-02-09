@@ -28,30 +28,6 @@ return {
   },
   { 'wakatime/vim-wakatime', lazy = false },
   {
-    'linux-cultist/venv-selector.nvim',
-    ft = { 'python' },
-    dependencies = {
-      'neovim/nvim-lspconfig',
-      'mfussenegger/nvim-dap',
-      'mfussenegger/nvim-dap-python',
-      { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
-    },
-    branch = 'regexp', -- This is the regexp branch, use this for the new version
-    config = function()
-      require 'custom.configs.venv-selector'
-    end,
-
-    keys = { { 'vs', '<cmd>VenvSelect<cr>' } },
-  },
-  {
-    'ThePrimeagen/harpoon',
-    branch = 'harpoon2',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require 'custom.configs.harpoon'
-    end,
-  },
-  {
     'karb94/neoscroll.nvim',
     config = function()
       require('neoscroll').setup {
@@ -79,47 +55,6 @@ return {
     config = function()
       require 'custom.configs.comment'
     end,
-  },
-  {
-    'folke/snacks.nvim',
-    priority = 1000,
-    lazy = false,
-    opts = {
-      bigfile = { enabled = true },
-      notifier = { enabled = true },
-      quickfile = { enabled = true },
-      statuscolumn = { enabled = true, folds = { open = true } },
-      -- words = { enabled = true },
-      scratch = { enabled = true },
-      dashboard = { enabled = true },
-      indent = { enabled = true, scope = { animate = { enabled = false } } },
-      input = { enabled = true },
-      zen = { enabled = true },
-      -- dim = { enabled = true },
-    },
-    keys = {
-      {
-        '<leader>.',
-        function()
-          Snacks.scratch()
-        end,
-        desc = 'Toggle Scratch Buffer',
-      },
-      {
-        '<leader>S',
-        function()
-          Snacks.scratch.select()
-        end,
-        desc = 'Select Scratch Buffer',
-      },
-      {
-        '<leader>zm',
-        function()
-          Snacks.zen()
-        end,
-        desc = 'Toggle [Z]en [M]ode',
-      },
-    },
   },
   {
     'sphamba/smear-cursor.nvim',

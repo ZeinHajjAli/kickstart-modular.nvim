@@ -3,13 +3,13 @@ return {
   lazy = false,
   dependencies = 'rafamadriz/friendly-snippets',
 
-  version = 'v0.*',
+  version = '*',
 
   opts = {
     keymap = { preset = 'enter', ['<Tab>'] = { 'select_next', 'fallback' }, ['<S-Tab>'] = { 'select_prev', 'fallback' } },
 
     completion = {
-      list = { selection = 'auto_insert' },
+      list = { selection = { preselect = false, auto_insert = true } },
       documentation = { auto_show = true },
       menu = {
         draw = {
@@ -21,9 +21,9 @@ return {
       },
     },
 
-    appearance = {
-      nerd_font_variant = 'mono',
-    },
+    -- appearance = {
+    --   nerd_font_variant = 'mono',
+    -- },
 
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
