@@ -43,20 +43,6 @@ return {
     end,
   },
   {
-    'stevearc/oil.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require 'custom.configs.oil'
-    end,
-  },
-  {
-    'numToStr/Comment.nvim',
-    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
-    config = function()
-      require 'custom.configs.comment'
-    end,
-  },
-  {
     'sphamba/smear-cursor.nvim',
     opts = {
       smear_between_buffers = false,

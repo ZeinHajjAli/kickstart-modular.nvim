@@ -7,13 +7,11 @@ return {
     notifier = { enabled = true },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true, folds = { open = true } },
-    -- words = { enabled = true },
     scratch = { enabled = true },
     dashboard = { enabled = true },
     indent = { enabled = true, scope = { animate = { enabled = false } } },
     input = { enabled = true },
     zen = { enabled = true },
-    -- dim = { enabled = true },
   },
   keys = {
     {

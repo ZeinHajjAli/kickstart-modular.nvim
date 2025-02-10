@@ -1,14 +1,15 @@
 return {
   'folke/snacks.nvim',
-  priority = 1000,
-  lazy = false,
   opts = {
     picker = {
       enabled = true,
-      matcher = {
-        cwd_bonus = true,
-        frecency = true,
+      main = {
+        current = true,
       },
+      -- matcher = {
+      --   cwd_bonus = true,
+      --   frecency = true,
+      -- },
       win = {
         input = {
           keys = {
