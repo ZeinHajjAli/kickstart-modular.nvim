@@ -61,10 +61,17 @@ map({ 'n', 'i', 'v' }, '<C-k>', '<cmd> TmuxNavigateUp<CR>', { desc = 'Window Up'
 -- map('n', '<leader>pd', ':30Lexplore<CR>', { desc = 'Open NetRW Explorer Drawer' })
 
 -- Split sizing commands
-map('n', '<M-,>', '<C-W>5<')
-map('n', '<M-.>', '<C-W>5>')
-map('n', '<M-j>', '<C-W>+')
-map('n', '<M-k>', '<C-W>-')
+if vim.loop.os_uname().sysname == 'Darwin' then
+  map('n', '<A-,>', '<C-W>5<', { desc = 'Shrink current split horizontally' })
+  map('n', '<A-.>', '<C-W>5>', { desc = 'Grow current split horizontally' })
+  map('n', '<A-j>', '<C-W>+', { desc = 'Grow current split vertically' })
+  map('n', '<A-k>', '<C-W>-', { desc = 'Shrink current split vertically' })
+else
+  map('n', '<M-,>', '<C-W>5<')
+  map('n', '<M-.>', '<C-W>5>')
+  map('n', '<M-j>', '<C-W>+')
+  map('n', '<M-k>', '<C-W>-')
+end
 
 -- Temporary comment commands
 map('n', 'gct', function()
