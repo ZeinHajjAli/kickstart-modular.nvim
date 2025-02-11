@@ -1,3 +1,8 @@
+local config_path = vim.fn.stdpath 'config'
+if type(config_path) == 'table' then
+  config_path = config_path[1]
+end
+
 return {
   'folke/snacks.nvim',
   opts = {
@@ -5,6 +10,9 @@ return {
       enabled = true,
       main = {
         current = true,
+      },
+      filter = {
+        cwd = true,
       },
       -- matcher = {
       --   cwd_bonus = true,
@@ -116,7 +124,7 @@ return {
     {
       '<leader>sn',
       function()
-        Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
+        Snacks.picker.files { cwd = config_path }
       end,
       desc = '[S]earch [N]eovim files',
     },
