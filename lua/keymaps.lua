@@ -65,4 +65,8 @@ map('n', '<leader>%', function()
   vscode.action 'workbench.action.splitEditor'
 end, { noremap = true, silent = true })
 
+map('n', 'gr', function()
+  vscode.action 'editor.action.goToReference'
+end, { noremap = true, silent = true })
+
 -- vim: ts=2 sts=2 sw=2 et
