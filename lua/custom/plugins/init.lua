@@ -26,7 +26,6 @@ return {
     'tpope/vim-fugitive',
     lazy = false,
   },
-  { 'wakatime/vim-wakatime', lazy = false },
   {
     'karb94/neoscroll.nvim',
     config = function()
@@ -62,11 +61,11 @@ return {
       },
     },
   },
-  {
-    'mrcjkb/rustaceanvim',
-    version = '^5',
-    lazy = false,
-  },
+  -- {
+  --   'mrcjkb/rustaceanvim',
+  --   version = '^7',
+  --   lazy = false,
+  -- },
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -78,4 +77,14 @@ return {
       }
     end,
   },
+  -- {
+  --   'amitds1997/remote-nvim.nvim',
+  --   version = '*', -- Pin to GitHub releases
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim', -- For standard functions
+  --     'MunifTanjim/nui.nvim', -- To build the plugin UI
+  --     'nvim-telescope/telescope.nvim', -- For picking b/w different remote methods
+  --   },
+  --   config = true,
+  -- },
 }

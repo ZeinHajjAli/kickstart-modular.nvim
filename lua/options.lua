@@ -88,6 +88,9 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldlevel = 99
 
+-- Set default tabstop to 4
+vim.opt.tabstop = 4
+
 vim.filetype.add {
   filename = {
     ['docker-compose.yml'] = 'yaml.docker-compose',

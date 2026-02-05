@@ -3,7 +3,7 @@ return {
   lazy = false,
   dependencies = 'rafamadriz/friendly-snippets',
 
-  version = '*',
+  version = '1.*',
 
   opts = {
     keymap = { preset = 'enter', ['<Tab>'] = { 'select_next', 'fallback' }, ['<S-Tab>'] = { 'select_prev', 'fallback' } },

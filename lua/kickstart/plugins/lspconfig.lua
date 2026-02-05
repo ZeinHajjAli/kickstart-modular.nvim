@@ -20,7 +20,6 @@ return {
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
-      'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
@@ -215,10 +214,6 @@ return {
       -- local capabilities = vim.lsp.protocol.make_client_capabilities()
       -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-      -- Same thing but with blink
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities())
-
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -229,82 +224,21 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        pyright = {
-          settings = {
-            pyright = {
-              disableOrganizeImports = true,
-            },
-            python = {
-              analysis = {
-                ignore = { '*' },
-              },
-            },
-          },
-        },
-        ruff = {},
-        tailwindcss = {},
-        html = {},
-        cssls = {
-          settings = {
-            css = { validate = true, lint = {
-              unknownAtRules = 'ignore',
-            } },
-            scss = { validate = true, lint = {
-              unknownAtRules = 'ignore',
-            } },
-            less = { validate = true, lint = {
-              unknownAtRules = 'ignore',
-            } },
-          },
-        },
-        clangd = {},
-        -- gopls = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ts_ls = {
-          init_options = {
-            preferences = {
-              disableSuggestions = true,
-            },
-          },
-          commands = {
-            OrganizeImports = {
-              function()
-                local params = {
-                  command = '_typescript.organizeImports',
-                  arguments = { vim.api.nvim_buf_get_name(0) },
-                }
-                vim.lsp.buf.execute_command(params)
-              end,
-              description = 'Organize Imports',
-            },
-          },
-        },
-        eslint = {},
-        astro = {},
-        lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-        dockerls = {},
-        docker_compose_language_service = {},
-        bashls = {},
-        zls = {},
+        'astro',
+        'bashls',
+        'clangd',
+        'cssls',
+        'docker_compose_language_service',
+        'dockerls',
+        'eslint',
+        'gopls',
+        'html',
+        'lua_ls',
+        'pyright',
+        'ruff',
+        'tailwindcss',
+        'ts_ls',
+        -- 'zls',
       }
 
       -- Ensure the servers and tools above are installed
@@ -317,36 +251,37 @@ return {
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-        'prettierd',
+      local mason_ensure_installed = {
+        'astro-language-server',
+        'bash-language-server',
         'clang-format',
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-      require('mason-lspconfig').setup {
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
+        'clangd',
+        'css-lsp',
+        'debugpy',
+        'docker-compose-language-service',
+        'dockerfile-language-server',
+        'eslint-lsp',
+        'gopls',
+        'html-lsp',
+        'lua-language-server',
+        'prettierd',
+        'pyright',
+        'ruff',
+        'stylua',
+        'tailwindcss-language-server',
+        'typescript-language-server',
+        -- 'zls',
       }
 
-      require('lspconfig').sourcekit.setup {
-        capabilities = {
-          workspace = {
-            didChangeWatchedFiles = {
-              dynamicRegistration = true,
-            },
-          },
-        },
-      }
+      require('mason-tool-installer').setup { ensure_installed = mason_ensure_installed }
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities())
+
+      for _, name in ipairs(servers) do
+        vim.lsp.config(name, { capabilities = capabilities })
+        vim.lsp.enable(name)
+      end
 
       local navbuddy = require 'nvim-navbuddy'
       navbuddy.setup()
