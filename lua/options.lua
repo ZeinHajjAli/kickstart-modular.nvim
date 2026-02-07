@@ -100,4 +100,13 @@ vim.filetype.add {
   },
 }
 
+-- Set conceal levels for norg files
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'norg',
+  callback = function()
+    vim.opt_local.conceallevel = 2
+    vim.opt_local.concealcursor = 'n'
+  end,
+})
+
 -- vim: ts=2 sts=2 sw=2 et

@@ -24,6 +24,8 @@ return {
         'luadoc',
         'markdown',
         'markdown_inline',
+        'norg',
+        'norg_meta',
         'python',
         -- 'query',
         -- 'rust',

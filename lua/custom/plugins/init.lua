@@ -77,6 +77,17 @@ return {
       }
     end,
   },
+  {
+    'nvim-neorg/neorg',
+    lazy = false,
+    version = '*',
+    config = {
+      load = {
+        ['core.defaults'] = {},
+        ['core.concealer'] = {},
+      },
+    },
+  },
   -- {
   --   'amitds1997/remote-nvim.nvim',
   --   version = '*', -- Pin to GitHub releases
