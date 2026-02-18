@@ -90,6 +90,8 @@ vim.opt.foldlevel = 99
 
 -- Set default tabstop to 4
 vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 vim.filetype.add {
   filename = {

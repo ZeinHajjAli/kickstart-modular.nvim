@@ -36,6 +36,11 @@ return {
 
       formatters = {
         swift_format = { command = 'swift', args = { 'format', '$FILENAME', '--in-place' } },
+        ['clang-format'] = {
+          prepend_args = {
+            '--style={BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: ForIndentation}',
+          },
+        },
       },
 
       formatters_by_ft = {
