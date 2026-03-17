@@ -35,7 +35,7 @@ require('lazy').setup({
 
   -- require 'kickstart/plugins/cmp',
 
-  require 'kickstart/plugins/catppuccin',
+  require 'kickstart/plugins/gruvbox',
 
   require 'kickstart/plugins/todo-comments',
 
@@ -87,6 +87,9 @@ require('lazy').setup({
       task = '📌',
       lazy = '💤 ',
     },
+  },
+  dev = {
+    path = '~/Developer/Projects/',
   },
 })
 

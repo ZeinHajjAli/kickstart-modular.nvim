@@ -35,24 +35,27 @@ map('n', '<right>', '<cmd>echo ""<cr>')
 map('n', '<up>', '<cmd>echo ""<CR>')
 map('n', '<down>', '<cmd>echo ""<CR>')
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-map('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-map('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-map('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-map('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
 -- Split window commands
 map('n', '<leader>%', ':vsplit<CR>', { desc = 'Split Vertically' })
 map('n', '<leader>"', ':split<CR>', { desc = 'Split Horizontally' })
 
--- vim tmux navigator commands
-map({ 'n', 'i', 'v' }, '<C-h>', '<cmd> TmuxNavigateLeft<CR>', { desc = 'Window Left' })
-map({ 'n', 'i', 'v' }, '<C-l>', '<cmd> TmuxNavigateRight<CR>', { desc = 'Window Right' })
-map({ 'n', 'i', 'v' }, '<C-j>', '<cmd> TmuxNavigateDown<CR>', { desc = 'Window Down' })
-map({ 'n', 'i', 'v' }, '<C-k>', '<cmd> TmuxNavigateUp<CR>', { desc = 'Window Up' })
+-- Reset tmux navigator mappings
+vim.g.tmux_navigator_no_mappings = 1
+
+-- Reusable tmux navigator mappings
+local set_tmux_navigator_keymaps = function()
+  map({ 'n', 'i', 'v', 't' }, '<C-h>', '<cmd> TmuxNavigateLeft<CR>', { desc = 'Window Left' })
+  map({ 'n', 'i', 'v', 't' }, '<C-l>', '<cmd> TmuxNavigateRight<CR>', { desc = 'Window Right' })
+  map({ 'n', 'i', 'v', 't' }, '<C-j>', '<cmd> TmuxNavigateDown<CR>', { desc = 'Window Down' })
+  map({ 'n', 'i', 'v', 't' }, '<C-k>', '<cmd> TmuxNavigateUp<CR>', { desc = 'Window Up' })
+end
+
+-- Set once globally
+set_tmux_navigator_keymaps()
+-- Set again for terminal buffers to prevent literal command injection
+vim.api.nvim_create_autocmd('TermOpen', {
+  callback = set_tmux_navigator_keymaps,
+})
 
 -- netrw commands
 -- map('n', '<leader>pp', ':Explore<CR>', { desc = 'Open NetRW Explorer Window' })
@@ -61,17 +64,21 @@ map({ 'n', 'i', 'v' }, '<C-k>', '<cmd> TmuxNavigateUp<CR>', { desc = 'Window Up'
 -- map('n', '<leader>pd', ':30Lexplore<CR>', { desc = 'Open NetRW Explorer Drawer' })
 
 -- Split sizing commands
+local optKey = 'A'
 if vim.loop.os_uname().sysname == 'Darwin' then
-  map('n', '<A-,>', '<C-W>5<', { desc = 'Shrink current split horizontally' })
-  map('n', '<A-.>', '<C-W>5>', { desc = 'Grow current split horizontally' })
-  map('n', '<A-j>', '<C-W>+', { desc = 'Grow current split vertically' })
-  map('n', '<A-k>', '<C-W>-', { desc = 'Shrink current split vertically' })
-else
-  map('n', '<M-,>', '<C-W>5<')
-  map('n', '<M-.>', '<C-W>5>')
-  map('n', '<M-j>', '<C-W>+')
-  map('n', '<M-k>', '<C-W>-')
+  optKey = 'M'
 end
+
+map('n', '<' .. optKey .. '-,>', '<C-W>5<', { desc = 'Shrink current split horizontally' })
+map('n', '<' .. optKey .. '-.>', '<C-W>5>', { desc = 'Grow current split horizontally' })
+map('n', '<' .. optKey .. '-j>', '<C-W>+', { desc = 'Grow current split vertically' })
+map('n', '<' .. optKey .. '-k>', '<C-W>-', { desc = 'Shrink current split vertically' })
+
+-- Split sizing commands for terminals (for use with Claude Code)
+map('t', '<' .. optKey .. '-,>', [[<C-\><C-n>C-W>5<i]], { desc = 'Shrink current split horizontally' })
+map('t', '<' .. optKey .. '-.>', [[<C-\><C-n>C-W>5>i]], { desc = 'Grow current split horizontally' })
+map('t', '<' .. optKey .. '-j>', [[<C-\><C-n>C-W>+i]], { desc = 'Grow current split vertically' })
+map('t', '<' .. optKey .. '-k>', [[<C-\><C-n>C-W>-i]], { desc = 'Shrink current split vertically' })
 
 -- Temporary comment commands
 map('n', 'gct', function()

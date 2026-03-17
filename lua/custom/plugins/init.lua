@@ -72,7 +72,7 @@ return {
     config = function()
       require('lualine').setup {
         options = {
-          theme = 'catppuccin',
+          theme = 'gruvbox-material',
         },
       }
     end,
@@ -92,6 +92,13 @@ return {
     opts = {
       processor = 'magick_cli',
     },
+  },
+  {
+    'zeinhajjali/claudeplz',
+    -- dev = true,
+    config = function()
+      require('claudeplz').setup()
+    end,
   },
   -- {
   --   'amitds1997/remote-nvim.nvim',
