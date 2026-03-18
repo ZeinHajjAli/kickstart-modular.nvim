@@ -1,3 +1,5 @@
+-- Buffer the tops and bottoms of a file when panning around, for better
+--  ergonomics
 local M = {}
 
 local mode_disabled = false

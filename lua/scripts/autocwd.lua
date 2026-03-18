@@ -1,3 +1,5 @@
+-- Automatically switches vim's current working directory when vimming into a
+--  directory. Helps when you have venvs and commands that use relative paths
 local M = {}
 
 M.setup = function()

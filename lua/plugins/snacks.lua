@@ -1,11 +1,17 @@
-local config_path = vim.fn.stdpath 'config'
-if type(config_path) == 'table' then
-  config_path = config_path[1]
-end
-
 return {
   'folke/snacks.nvim',
+  priority = 1000,
+  lazy = false,
   opts = {
+    bigfile = { enabled = true },
+    notifier = { enabled = true },
+    quickfile = { enabled = true },
+    statuscolumn = { enabled = true, folds = { open = true } },
+    scratch = { enabled = true },
+    dashboard = { enabled = true },
+    indent = { enabled = true, scope = { animate = { enabled = false } } },
+    input = { enabled = true },
+    zen = { enabled = true },
     picker = {
       enabled = true,
       main = {
@@ -14,10 +20,6 @@ return {
       filter = {
         cwd = true,
       },
-      -- matcher = {
-      --   cwd_bonus = true,
-      --   frecency = true,
-      -- },
       win = {
         input = {
           keys = {
@@ -29,6 +31,27 @@ return {
     },
   },
   keys = {
+    {
+      '<leader>.',
+      function()
+        Snacks.scratch()
+      end,
+      desc = 'Toggle Scratch Buffer',
+    },
+    {
+      '<leader>S',
+      function()
+        Snacks.scratch.select()
+      end,
+      desc = 'Select Scratch Buffer',
+    },
+    {
+      '<leader>zm',
+      function()
+        Snacks.zen()
+      end,
+      desc = 'Toggle [Z]en [M]ode',
+    },
     {
       '<leader>sf',
       function()
@@ -124,6 +147,10 @@ return {
     {
       '<leader>sn',
       function()
+        local config_path = vim.fn.stdpath 'config'
+        if type(config_path) == 'table' then
+          config_path = config_path[1]
+        end
         Snacks.picker.files { cwd = config_path }
       end,
       desc = '[S]earch [N]eovim files',

@@ -1,0 +1,374 @@
+*config.txt*  Personal Neovim configuration reference
+
+==============================================================================
+CONTENTS                                                        *config-contents*
+
+  1. Overview ............................................. |config-overview|
+  2. Architecture ......................................... |config-architecture|
+  3. Options .............................................. |config-options|
+  4. Keymaps .............................................. |config-keymaps|
+     4.1 Navigation ....................................... |config-keymaps-nav|
+     4.2 File Finding ..................................... |config-keymaps-find|
+     4.3 Git .............................................. |config-keymaps-git|
+     4.4 LSP .............................................. |config-keymaps-lsp|
+     4.5 Diagnostics ...................................... |config-keymaps-diag|
+     4.6 Debugging ........................................ |config-keymaps-dap|
+     4.7 Harpoon .......................................... |config-keymaps-harpoon|
+     4.8 Formatting & Editing ............................. |config-keymaps-edit|
+     4.9 Misc ............................................. |config-keymaps-misc|
+  5. LSP .................................................. |config-lsp|
+  6. Completion ........................................... |config-completion|
+  7. Formatting ........................................... |config-formatting|
+  8. Plugins .............................................. |config-plugins|
+  9. Scripts .............................................. |config-scripts|
+
+==============================================================================
+1. OVERVIEW                                                      *config-overview*
+
+Personal Neovim configuration built on kickstart.nvim. Uses Lua exclusively
+with Lazy.nvim for plugin management.
+
+Leader key: <Space>
+Local leader key: <Space>
+Nerd Font: enabled
+
+==============================================================================
+2. ARCHITECTURE                                               *config-architecture*
+
+Loading order: ~
+
+  init.lua
+    scripts/autocwd       (sets cwd before plugins load)
+    options.lua
+    keymaps.lua
+    lazy-bootstrap.lua    (installs lazy.nvim if missing)
+    lazy-plugins.lua      (imports lua/plugins/*)
+    scripts/scrolleof     (runs after plugins)
+
+Directory layout: ~
+
+  lua/
+    options.lua           All vim.opt.* settings
+    keymaps.lua           All keymaps and autocommands
+    lazy-bootstrap.lua    lazy.nvim installer
+    lazy-plugins.lua      Plugin loader ({ import = 'plugins' })
+    health.lua            :checkhealth checks
+    plugins/              One file per plugin or logical group
+    configs/              navic.lua, navbuddy.lua
+    scripts/              autocwd.lua, scrolleof.lua
+  after/lsp/              Per-language LSP server overrides
+  scripts/
+    install.sh            OS-aware bootstrap installer
+
+To add a plugin, create a new .lua file in lua/plugins/ returning a valid
+Lazy.nvim plugin spec. It will be picked up automatically.
+
+Dev plugins are loaded from ~/Developer/Projects/ when dev = true.
+
+==============================================================================
+3. OPTIONS                                                        *config-options*
+
+Set in lua/options.lua. Notable settings:
+
+Display: ~
+  number + relativenumber      Hybrid line numbers
+  cursorline                   Highlight current line
+  colorcolumn = "80"           Column guide at 80 chars
+  wrap = false                 No line wrapping
+  list + listchars             Shows tabs (»), trailing spaces (·), nbsp (␣)
+  signcolumn = "yes"           Always show sign column
+
+Editing: ~
+  tabstop / shiftwidth = 4     4-space indentation
+  expandtab = true             Spaces, not tabs
+  breakindent = true           Wrapped lines preserve indentation
+  undofile = true              Persistent undo history
+  updatetime = 250             Faster CursorHold / diagnostics
+  timeoutlen = 300             Faster which-key popup
+
+Search: ~
+  ignorecase = true            Case-insensitive by default
+  smartcase = true             Case-sensitive when uppercase used
+  inccommand = "split"         Live preview of :s substitutions
+
+Window: ~
+  splitbelow / splitright      New splits open below and to the right
+
+Folding: ~
+  foldmethod = "expr"          Treesitter-based folding
+  foldlevel = 99               All folds open by default
+
+Clipboard: ~
+  clipboard = "unnamedplus"    Syncs with system clipboard (OSC 52 for SSH)
+
+Winbar: ~
+  Shows current symbol context via navic (e.g. MyClass > myMethod)
+
+File type extras: ~
+  docker-compose*.yml          Recognized as yaml.docker-compose
+  *.norg                       Custom concealment settings for Neorg
+
+==============================================================================
+4. KEYMAPS                                                        *config-keymaps*
+
+All keymaps are defined in lua/keymaps.lua unless noted otherwise.
+Plugin-specific keymaps are defined inline in each plugin file.
+
+------------------------------------------------------------------------------
+4.1 Navigation                                               *config-keymaps-nav*
+
+  <C-h>           Move to left window  (works across tmux panes)
+  <C-j>           Move to lower window (works across tmux panes)
+  <C-k>           Move to upper window (works across tmux panes)
+  <C-l>           Move to right window (works across tmux panes)
+
+  <leader>%       Vertical split
+  <leader>"       Horizontal split
+
+  Alt/Cmd + ,     Shrink split horizontally  (Alt on Linux, Cmd on macOS)
+  Alt/Cmd + .     Grow split horizontally
+  Alt/Cmd + j     Grow split vertically
+  Alt/Cmd + k     Shrink split vertically
+
+  -               Open parent directory (oil.nvim)
+
+------------------------------------------------------------------------------
+4.2 File Finding                                            *config-keymaps-find*
+
+Powered by snacks.nvim picker. All search keymaps use <leader>s prefix.
+
+  <leader>sf      Find files (smart — respects .gitignore)
+  <leader>sg      Live grep across project
+  <leader>sw      Grep word under cursor
+  <leader>sr      Resume last picker session
+  <leader>s.      Recent files
+  <leader>/       Fuzzy search current buffer
+  <leader>s/      Grep in open buffers only
+  <leader>sh      Help tags
+  <leader>sk      Keymaps
+  <leader>sm      Man pages
+  <leader>sd      Diagnostics
+  <leader>sn      Files in Neovim config directory
+  <leader>ss      Choose a picker
+  <leader>p       Buffer switcher
+
+------------------------------------------------------------------------------
+4.3 Git                                                      *config-keymaps-git*
+
+Picker keymaps (snacks):
+  <leader>gl      Git log
+  <leader>gs      Git status
+  <leader>gb      Git branches
+
+Hunk keymaps (gitsigns, normal mode):
+  ]c              Jump to next hunk
+  [c              Jump to previous hunk
+  <leader>hs      Stage hunk
+  <leader>hr      Reset hunk
+  <leader>hS      Stage entire buffer
+  <leader>hR      Reset entire buffer
+  <leader>hu      Undo staged hunk
+  <leader>hp      Preview hunk inline
+  <leader>hb      Blame current line
+  <leader>hd      Diff against index
+  <leader>hD      Diff against last commit
+  <leader>tb      Toggle line blame
+  <leader>tD      Toggle show deleted lines
+
+Visual mode hunk keymaps:
+  <leader>hs      Stage selected hunk
+  <leader>hr      Reset selected hunk
+
+------------------------------------------------------------------------------
+4.4 LSP                                                      *config-keymaps-lsp*
+
+Available when an LSP server is attached to the buffer.
+
+  gd              Go to definition (snacks picker)
+  gr              Go to references (snacks picker)
+  gI              Go to implementation
+  gD              Go to declaration
+  <leader>D       Go to type definition
+  <leader>ds      Document symbols
+  <leader>ws      Workspace symbols
+  <leader>rn      Rename symbol
+  <leader>ca      Code action
+  <leader>th      Toggle inlay hints
+  <leader>n       Open Navbuddy (symbol tree popup)
+  <leader>oi      Organize imports (TypeScript only)
+  K               Hover documentation
+
+------------------------------------------------------------------------------
+4.5 Diagnostics                                             *config-keymaps-diag*
+
+  <leader>q       Send diagnostics to quickfix list
+
+  Trouble.nvim:
+  <leader>xx      Toggle workspace diagnostics
+  <leader>xX      Toggle buffer diagnostics
+  <leader>cs      Symbols panel
+  <leader>cl      LSP references/definitions panel
+  <leader>xL      Location list
+  <leader>xQ      Quickfix list
+
+------------------------------------------------------------------------------
+4.6 Debugging                                                *config-keymaps-dap*
+
+  <F5>            Continue / start debug session
+  <F1>            Step into
+  <F2>            Step over
+  <F3>            Step out
+  <F7>            Toggle DAP UI
+  <leader>b       Toggle breakpoint
+  <leader>B       Set conditional breakpoint
+
+------------------------------------------------------------------------------
+4.7 Harpoon                                               *config-keymaps-harpoon*
+
+  <leader>a       Add current file to harpoon list
+  <C-e>           Open harpoon quick menu
+  <C-S-P>         Navigate to previous harpoon file
+  <C-S-N>         Navigate to next harpoon file
+
+------------------------------------------------------------------------------
+4.8 Formatting & Editing                                    *config-keymaps-edit*
+
+  <leader>f       Format buffer (conform.nvim)
+  gct             Duplicate current line, comment the original
+  ;               Enter command mode (alias for :)
+  <Esc>           Clear search highlight (normal mode)
+
+  Completion (blink.cmp):
+  <Tab>           Select next completion item
+  <S-Tab>         Select previous completion item
+  <CR>            Accept completion
+
+  Text objects (mini.ai):
+  Standard a/i text objects plus: function, class, argument, etc.
+
+  Surround (mini.surround):
+  sa              Add surround
+  sd              Delete surround
+  sr              Replace surround
+
+------------------------------------------------------------------------------
+4.9 Misc                                                    *config-keymaps-misc*
+
+  <leader>.       Toggle scratch buffer
+  <leader>S       Select scratch buffer
+  <leader>zm      Toggle zen mode
+  <leader>td      List all TODOs in project
+  <leader>T       List TODO/FIX/FIXME only
+  vs              Select Python virtual environment
+  <leader>rr      Reload claudeplz plugin (dev only)
+
+==============================================================================
+5. LSP                                                              *config-lsp*
+
+Configured in lua/plugins/lspconfig.lua. Mason handles installation.
+Per-server overrides live in after/lsp/<server>.lua.
+
+Servers: ~
+
+  Language              Server(s)                Notes
+  ──────────────────────────────────────────────────────────────────────────
+  TypeScript/JS         ts_ls                    Suggestions disabled;
+                                                 <leader>oi organizes imports
+  Python                pyright + ruff           pyright for types,
+                                                 ruff for lint/format
+  Lua                   lua_ls                   Snippet completion on confirm
+  Go                    gopls
+  C/C++                 clangd
+  CSS/SCSS/Less         cssls                    Unknown at-rules ignored
+  HTML                  html
+  Astro                 astro
+  Bash                  bashls
+  Docker                dockerls +
+                        docker_compose_language_service
+  Tailwind CSS          tailwindcss
+  ESLint                eslint
+
+Mason also installs formatters: prettier, prettierd, stylua, clang-format.
+
+Code navigation: ~
+
+  Navic     Shows current symbol breadcrumb in the winbar.
+  Navbuddy  Popup tree of all symbols in the file. Open with <leader>n.
+
+==============================================================================
+6. COMPLETION                                                  *config-completion*
+
+Plugin: blink.cmp (lua/plugins/blink.lua)
+
+Sources (in order): LSP → path → snippets → buffer
+
+  <Tab>     Next item
+  <S-Tab>   Previous item
+  <CR>      Accept
+
+==============================================================================
+7. FORMATTING                                                  *config-formatting*
+
+Plugin: conform.nvim (lua/plugins/conform.lua)
+
+Formats on save with LSP fallback. Manual format: <leader>f
+
+  Language                    Formatter
+  ──────────────────────────────────────────────
+  Lua                         stylua
+  JavaScript / TypeScript     prettierd
+  JSX / TSX                   prettierd
+  HTML                        prettierd
+  JSON                        prettierd
+  Astro                       prettierd
+  Go                          gofmt
+  C / C++                     clang-format (manual only, not on save)
+
+==============================================================================
+8. PLUGINS                                                        *config-plugins*
+
+  File                  Plugin(s)
+  ──────────────────────────────────────────────────────────────────────────
+  lspconfig.lua         nvim-lspconfig, mason.nvim, mason-tool-installer,
+                        fidget.nvim, nvim-navic, nvim-navbuddy
+  blink.lua             blink.cmp
+  treesitter.lua        nvim-treesitter (+ textobjects)
+  conform.lua           conform.nvim
+  debug.lua             nvim-dap, nvim-dap-ui, nvim-dap-python
+  git.lua               vim-fugitive, gitsigns.nvim
+  snacks.lua            snacks.nvim (picker, notifier, dashboard, scratch,
+                        indent, statuscolumn, bigfile, quickfile, zen, input)
+  harpoon.lua           harpoon (v2)
+  oil.lua               oil.nvim
+  trouble.lua           trouble.nvim
+  which-key.lua         which-key.nvim
+  mini.lua              mini.nvim (ai, surround)
+  editor.lua            vim-tmux-navigator, nvim-ts-autotag,
+                        nvim-autopairs, Comment.nvim
+  ui.lua                lualine.nvim, neoscroll.nvim, smear-cursor.nvim,
+                        render-markdown.nvim, image.nvim
+  gruvbox.lua           gruvbox-material
+  todo-comments.lua     todo-comments.nvim
+  neorg.lua             neorg (workspace: ~/notes)
+  venv-selector.lua     venv-selector.nvim
+  claudeplz.lua         claudeplz (dev = true, from ~/Developer/Projects/)
+
+==============================================================================
+9. SCRIPTS                                                        *config-scripts*
+
+lua/scripts/autocwd.lua ~
+
+  Runs before plugins load. Automatically changes the working directory:
+  - When opening a directory: cd into it
+  - When opening a file: cd into the file's parent directory
+  Handles oil:// URIs so oil.nvim doesn't trigger false directory changes.
+
+lua/scripts/scrolleof.lua ~
+
+  Maintains scrolloff at end of file so the cursor never sticks to the
+  last line. Configurable options:
+  - Disabled for floating windows
+  - Can be disabled per-filetype or per-mode
+
+==============================================================================
+vim:tw=78:ts=2:ft=help:norl:

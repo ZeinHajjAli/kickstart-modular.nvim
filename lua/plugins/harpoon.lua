@@ -11,6 +11,8 @@ return {
       },
     }
 
+    -- TODO: Change the below to use Snacks.picker:
+    --
     -- For using telescope as the search buffer
     -- local conf = require('telescope.config').values
     -- local function toggle_telescope(harpoon_files)
@@ -44,6 +46,7 @@ return {
       harpoon:list():add()
     end, { desc = 'Add buffer to harpoon' })
 
+    -- Keymaps for quick jumping to buffers
     -- vim.keymap.set('n', '<C-h>', function()
     --   harpoon:list():select(1)
     -- end)

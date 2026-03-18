@@ -1,11 +1,3 @@
--- debug.lua
---
--- Shows how to use the DAP plugin to debug your code.
---
--- Primarily focused on configuring the debugger for Go, but can
--- be extended to other languages as well. That's why it's called
--- kickstart.nvim and not kitchen-sink.nvim ;)
-
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
@@ -140,14 +132,6 @@ return {
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-    -- Install golang specific config
-    -- require('dap-go').setup {
-    --   delve = {
-    --     -- On Windows delve must be run attached or it crashes.
-    --     -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-    --     detached = vim.fn.has 'win32' == 0,
-    --   },
-    -- }
     require('dap-python').setup(vim.fn.stdpath 'data' .. '/mason/packages/debugpy/venv/bin/python')
 
     require('dap-vscode-js').setup {

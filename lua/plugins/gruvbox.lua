@@ -10,7 +10,7 @@ return {
       -- vim.g.gruvbox_material_sign_column_background = 'linenr'
       -- vim.g.gruvbox_material_ui_contrast = 'high'
       vim.g.gruvbox_material_current_word = 'high contrast background'
-      vim.g.gruvbox_material_enable_italic = true
+      -- vim.g.gruvbox_material_enable_italic = true
 
       vim.cmd.colorscheme 'gruvbox-material'
     end,

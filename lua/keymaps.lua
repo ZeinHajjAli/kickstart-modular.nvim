@@ -10,10 +10,6 @@ end
 -- Map ';' to ':' to enter command mode more easily from normal mode
 map('n', ';', ':')
 
--- A quick 'jk', or 'kj' in insert mode goes to normal mode
--- map('i', 'jk', '<Esc>')
--- map('i', 'kj', '<Esc>')
-
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -27,7 +23,7 @@ map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]ui
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+-- map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
 map('n', '<left>', '<cmd>echo ""<cr>')
@@ -57,12 +53,6 @@ vim.api.nvim_create_autocmd('TermOpen', {
   callback = set_tmux_navigator_keymaps,
 })
 
--- netrw commands
--- map('n', '<leader>pp', ':Explore<CR>', { desc = 'Open NetRW Explorer Window' })
--- map('n', '<leader>pv', ':30Vexplore<CR>', { desc = 'Open NetRW Explorer Window (Vertical Split)' })
--- map('n', '<leader>ph', ':30Hexplore<CR>', { desc = 'Open NetRW Explorer Window (Horizontal Split)' })
--- map('n', '<leader>pd', ':30Lexplore<CR>', { desc = 'Open NetRW Explorer Drawer' })
-
 -- Split sizing commands
 local optKey = 'A'
 if vim.loop.os_uname().sysname == 'Darwin' then
@@ -75,10 +65,21 @@ map('n', '<' .. optKey .. '-j>', '<C-W>+', { desc = 'Grow current split vertical
 map('n', '<' .. optKey .. '-k>', '<C-W>-', { desc = 'Shrink current split vertically' })
 
 -- Split sizing commands for terminals (for use with Claude Code)
-map('t', '<' .. optKey .. '-,>', [[<C-\><C-n>C-W>5<i]], { desc = 'Shrink current split horizontally' })
-map('t', '<' .. optKey .. '-.>', [[<C-\><C-n>C-W>5>i]], { desc = 'Grow current split horizontally' })
-map('t', '<' .. optKey .. '-j>', [[<C-\><C-n>C-W>+i]], { desc = 'Grow current split vertically' })
-map('t', '<' .. optKey .. '-k>', [[<C-\><C-n>C-W>-i]], { desc = 'Shrink current split vertically' })
+map('t', '<' .. optKey .. '-,>', [[<C-\><C-n><C-W>5<i]], { desc = 'Shrink current split horizontally' })
+map('t', '<' .. optKey .. '-.>', [[<C-\><C-n><C-W>5>i]], { desc = 'Grow current split horizontally' })
+map('t', '<' .. optKey .. '-j>', [[<C-\><C-n><C-W>+i]], { desc = 'Grow current split vertically' })
+map('t', '<' .. optKey .. '-k>', [[<C-\><C-n><C-W>-i]], { desc = 'Shrink current split vertically' })
+
+-- Claudeplz development reload
+map('n', '<leader>rr', function()
+  for k in pairs(package.loaded) do
+    if k:match '^claudeplz' then
+      package.loaded[k] = nil
+    end
+  end
+  require('claudeplz').setup()
+  vim.notify('claudeplz reloaded', vim.log.levels.INFO)
+end, { desc = 'Reload claudeplz' })
 
 -- Temporary comment commands
 map('n', 'gct', function()
@@ -87,19 +88,17 @@ map('n', 'gct', function()
   vim.cmd 'normal! p'
 end, { noremap = true, silent = true })
 
--- map('v', 'gct', ':y<CR>gvgcp')
-
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
+--  See `:help vim.hl.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
