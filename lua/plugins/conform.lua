@@ -60,7 +60,7 @@ return {
         javascriptreact = { 'prettierd' },
         json = { 'prettierd' },
         lua = { 'stylua' },
-        python = { 'reorder_python_imports', 'black' },
+        -- python = { 'reorder_python_imports', 'black' },
         ss = { 'prettierd' },
         -- swift = { 'swift_format' },
         typescript = { 'prettierd' },
