@@ -35,12 +35,21 @@ return {
       log_level = vim.log.levels.DEBUG,
 
       formatters = {
-        swift_format = { command = 'swift', args = { 'format', '$FILENAME', '--in-place' } },
         ['clang-format'] = {
           prepend_args = {
             '--style={BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: ForIndentation}',
           },
         },
+        black = {
+          prepend_args = { '--extend-exclude', 'venv' },
+        },
+        reorder_python_imports = {
+          command = 'reorder-python-imports',
+          args = { '$FILENAME' },
+          stdin = false,
+          exit_codes = { 0, 1 },
+        },
+        swift_format = { command = 'swift', args = { 'format', '$FILENAME', '--in-place' } },
       },
 
       formatters_by_ft = {
@@ -51,6 +60,7 @@ return {
         javascriptreact = { 'prettierd' },
         json = { 'prettierd' },
         lua = { 'stylua' },
+        python = { 'reorder_python_imports', 'black' },
         ss = { 'prettierd' },
         -- swift = { 'swift_format' },
         typescript = { 'prettierd' },

@@ -1,6 +1,19 @@
 return {
   'folke/trouble.nvim',
-  opts = {},
+  opts = {
+    focus = true,
+    modes = {
+      prev_right = {
+        mode = 'diagnostics',
+        preview = {
+          type = 'split',
+          relative = 'win',
+          position = 'right',
+          size = 0.3,
+        },
+      },
+    },
+  },
   cmd = 'Trouble',
   keys = {
     {

@@ -42,3 +42,15 @@ git pull
 rm -rf "${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
 rm -rf "${XDG_DATA_HOME:-$HOME/.local/share}/nvim"
 ```
+
+## Notable Features
+
+- **Fuzzy finder**: snacks.nvim (`<leader>s*` / `<leader>g*`)
+- **Completion**: blink.cmp
+- **File browser**: oil.nvim (`-`)
+- **File marks**: harpoon v2 (`<C-e>` menu, `<leader>a` to add)
+- **AI CLI**: sidekick.nvim — toggle Claude panel with `<C-.>` or `<leader>aa`
+- **Formatting**: conform.nvim — prettierd, stylua, black + reorder-python-imports (Python), clang-format (C/C++)
+- **Linting**: nvim-lint — shellcheck for bash/sh
+- **Theme**: Gruvbox Material (dark)
+- **Window navigation**: `Ctrl+H/J/K/L` (works across tmux panes)

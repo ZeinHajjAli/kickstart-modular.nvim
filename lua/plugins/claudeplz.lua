@@ -1,7 +1,7 @@
 return {
-  'zeinhajjali/claudeplz',
-  dev = true,
-  opts = {
-    -- cli_args = { '--dangerously-skip-permissions' },
-  },
+  -- 'zeinhajjali/claudeplz',
+  -- dev = true,
+  -- opts = {
+  --   -- cli_args = { '--dangerously-skip-permissions' },
+  -- },
 }
