@@ -184,20 +184,20 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        'astro',
+        -- 'astro',
         'bashls',
-        'clangd',
-        'cssls',
+        -- 'clangd',
+        -- 'cssls',
         'docker_compose_language_service',
         'dockerls',
-        'eslint',
+        -- 'eslint',
         'gopls',
-        'html',
+        -- 'html',
         'lua_ls',
         'pyright',
-        'ruff',
-        'tailwindcss',
-        'ts_ls',
+        -- 'ruff',
+        -- 'tailwindcss',
+        -- 'ts_ls',
       }
 
       -- Ensure the servers and tools above are installed
@@ -211,30 +211,30 @@ return {
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local mason_ensure_installed = {
-        'astro-language-server',
+        -- 'astro-language-server',
         'bash-language-server',
-        -- 'black',
-        'clang-format',
-        'clangd',
-        -- 'codespell',
-        'css-lsp',
+        'black',
+        -- 'clang-format',
+        -- 'clangd',
+        'codespell',
+        -- 'css-lsp',
         'debugpy',
         'docker-compose-language-service',
         'dockerfile-language-server',
-        'eslint-lsp',
-        -- 'flake8',
+        -- 'eslint-lsp',
+        'flake8',
         'gopls',
-        'html-lsp',
+        -- 'html-lsp',
         'lua-language-server',
-        -- 'mypy',
+        'mypy',
         'prettierd',
         'pyright',
-        -- 'reorder-python-imports',
-        'ruff',
+        'reorder-python-imports',
+        -- 'ruff',
         'shellcheck',
         'stylua',
-        'tailwindcss-language-server',
-        'typescript-language-server',
+        -- 'tailwindcss-language-server',
+        -- 'typescript-language-server',
       }
 
       require('mason-tool-installer').setup { ensure_installed = mason_ensure_installed }

@@ -6,7 +6,7 @@ return {
 
     lint.linters_by_ft = {
       bash = { 'shellcheck' },
-      -- python = { 'flake8', 'mypy', 'codespell' },
+      python = { 'flake8', 'mypy', 'codespell' },
       sh = { 'shellcheck' },
     }
 
